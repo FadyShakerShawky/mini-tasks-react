@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import "./footer.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFacebook ,faTwitter} from "@fortawesome/free-brands-svg-icons"
+import { Link } from 'react-router-dom'
 
 class Footer extends Component {
     render() {
@@ -19,14 +20,14 @@ class Footer extends Component {
                         <div className="col-xs-6 col-md-3">
                             <h6>Links</h6>
                             <ul className="footer-links">
-                                <li><a href="http://scanfcode.com/category/c-language/">C</a></li>
+                                <li><Link className='nav-link' to='/list'>List</Link></li>
                             </ul>
                         </div>
 
                         <div className="col-xs-6 col-md-3">
                             <h6>Quick Links</h6>
                             <ul className="footer-links">
-                                <li><a href="http://scanfcode.com/about/">About Us</a></li>
+                                <li><Link className='nav-link' to='/create'>create</Link></li>
                             </ul>
                         </div>
                     </div>

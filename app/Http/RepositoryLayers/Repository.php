@@ -18,8 +18,15 @@ class Repository{
     {
         return $this->model->orderBy('created_at','desc')->get();
     }
-
-
-
-
+    public function findBy($key,$value){
+        return $this->model->where($key,$value)->get();
+    }
+    public function findById($id){
+        return $this->model->findOrFail($id);
+    }
+    public function updateByAttribute(Model $instance, $attribute, $value)
+    {
+        $instance->$attribute = $value;
+        return $instance->save();
+    }
 }

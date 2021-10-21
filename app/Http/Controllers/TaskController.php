@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\ServiceLayer\TaskService;
+use App\Http\ServiceLayers\TaskService;
 use App\Models\Task;
 use Illuminate\Http\Request;
 
@@ -11,13 +11,8 @@ class TaskController extends Controller
     private $service;
     public function __construct(TaskService $taskService)
     {
-        $this->service = $this->taskService;;
+        $this->service = $taskService;
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(Request $request)
     {
         if($request->wantsJson()){
@@ -25,69 +20,28 @@ class TaskController extends Controller
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate(['title' => 'required|min:3']);
+        return $this->service->create($request->all(),false);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Task  $task
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Task $task)
+    public function updateTitle(Request $request)
     {
-        //
+        $request->validate(['title' => 'required|min:3']);
+        return $this->service->updateTitle($request->all());
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Task  $task
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Task $task)
+    public function updateStatus(Request $request)
     {
-        //
+        $request->validate(['status' => 'required|exists:status,title']);
+        return $this->service->updateStatus($request->all());
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Task  $task
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Task $task)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Task  $task
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Task $task)
     {
-        //
+        return $this->service->delete($task);
+    }
+    public function show(Task $task)
+    {
+        return $task;
     }
 }
